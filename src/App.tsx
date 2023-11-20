@@ -5,10 +5,7 @@ import UserTest from "./components/UserTest"
 const App = () => {
   
   return (
-    <>
-      <div>{"hello"}</div>
-      <UserTest />
-    </>
+    <div>Zkouska</div>
   )
 }
 
