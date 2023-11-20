@@ -1,0 +1,21 @@
+/* Test */
+ul {
+    display: flex;
+    align-items: center;
+    background: blue;
+    justify-content: center;
+    color: white;
+    height: 90px;
+}
+
+li {
+    padding-right: 1rem;
+}
+
+a {
+    font-size: 25px;
+}
+
+a.active {
+    color: black;
+}
