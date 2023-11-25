@@ -1,26 +1,22 @@
 import { useState } from 'react'
-
-const home = () => {
+import backgroundImage from '../assets/hero-img.jpg'
+const Home = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
 
-  return <section className="test scroll-disabled">
-    <div className="landing-page-overlay"></div>
-    <div className="div">
-      <h1>Welcome to the new game</h1>
-      <button 
-        className="start-button"
-        type="submit"
-        onClick={()=>setOpenMenu(!openMenu)}>Start game
-      </button>   
-    {openMenu && <p>What is "Lorem ipsum"?
-    In publishing and graphic design, lorem ipsum is common placeholder text used to demonstrate the graphic elements of a document or visual presentation, such as web pages, typography, and graphical layout. It is a form of "greeking".
-
-    Even though using "lorem ipsum" often arouses curiosity due to its resemblance to classical Latin, it is not intended to have meaning. Where text is visible in a document, people tend to focus on the textual content rather than upon overall presentation, so publishers use lorem ipsum when displaying a typeface or design in order to direct the focus to presentation. "Lorem ipsum" also approximates a typical distribution of letters in English.</p>
-    }
-    </div>
-
-  </section>
+  return (
+    <section className="flex items-center justify-center h-screen text-white" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', fontFamily: 'Libre Baskerville, serif' }}>
+      <div className="bg-gray-900 p-8 rounded-lg shadow-2xl max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl">
+        <h1 className="text-4xl font-bold mb-4 text-center">Welcome to the new game</h1>
+        <button 
+          className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-500 w-full"
+          type="button"
+          onClick={() => setOpenMenu(!openMenu)}>Start game
+        </button>   
+        {openMenu && <p className="mt-4 text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl">What is "Lorem ipsum"?...</p>}
+      </div>
+    </section>
+  )
 }
 
-export default home
+export default Home;
