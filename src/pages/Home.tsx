@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import backgroundImage from '../assets/hero-img.jpg'
+
 const Home = () => {
   const [openMenu, setOpenMenu] = useState(false);
-
 
   return (
     <section className="flex items-center justify-center h-screen text-white" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', fontFamily: 'Libre Baskerville, serif' }}>
