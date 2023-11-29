@@ -22,8 +22,10 @@ const Header = () => {
         </button>
         <ul className="space-y-4">
           <li><NavLink to="/" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Home</NavLink></li>
-          <li><NavLink to="/about" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>About</NavLink></li>
-          <li><NavLink to="/contact" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Contact</NavLink></li>
+          <li><NavLink to="/signin" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Sign in</NavLink></li>
+          <li><NavLink to="/signup" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Sign up</NavLink></li>
+          <li><NavLink to="/news" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>What's new?</NavLink></li>
+          <li><NavLink to="/game" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Game</NavLink></li>
         </ul>
       </nav>
     </header>
