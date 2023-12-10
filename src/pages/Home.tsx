@@ -1,4 +1,3 @@
-import './Home.css'
 import { useState } from 'react'
 
 const home = () => {
