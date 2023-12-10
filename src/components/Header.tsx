@@ -25,7 +25,6 @@ const Header = () => {
           <li><NavLink to="/signin" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Sign in</NavLink></li>
           <li><NavLink to="/signup" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Sign up</NavLink></li>
           <li><NavLink to="/news" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>What's new?</NavLink></li>
-          <li><NavLink to="/game" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Game</NavLink></li>
         </ul>
       </nav>
     </header>
