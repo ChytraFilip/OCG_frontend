@@ -12,7 +12,7 @@ const App = () => {
     <Routes>
       <Route element={<SharedLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/game/:sessionId" element={<Game />} />
         <Route path='/signin' element={<Signin />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/news' element={<News />} />

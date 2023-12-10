@@ -1,41 +1,35 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import './Header.css'
-import barIcon from '../icons/bars-solid.svg';
-import { useState, useEffect } from 'react'
 
 const Header = () => {
-  const [barClicked, setBarClicked] = useState("bar-nonactive");
-  const [openBarMenu, setOpenBarMenu] = useState(false);
-  const [menuClass, setMenuClass] = useState('navbar navbar-close')
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect( ()=> {
-    setMenuClass(openBarMenu ? 'navbar navbar-open' : 'navbar navbar-close')
-
-    if(openBarMenu) {
-      setBarClicked('bar-active')
-    } else {
-      setBarClicked('bar')
-    }
-    
-  },[openBarMenu])
-
-  return <header>
-    <img  src={barIcon}
-          className={barClicked} 
-          alt="bar-icon"
-          width="25px"
-          onClick={ ()=> setOpenBarMenu(!openBarMenu)}
-    />
-    <nav className={menuClass}>
-      <ul>
-          <li><NavLink to="/">Home</NavLink></li>
-          <li><NavLink to="/signup">Sign up</NavLink></li>
-          <li><NavLink to="/signin">Sign in</NavLink></li>
-          <li><NavLink to="/news">What's new</NavLink></li>
-          <li><NavLink to="/game">Game</NavLink></li>
-      </ul>
-    </nav>
-  </header>
+  return (
+    <header className="bg-gray-900 text-white p-4 flex justify-between items-center">
+      <div className="flex items-center">
+        <h1 className="text-3xl font-bold">Game Title</h1>
+      </div>
+      <button onClick={() => setIsOpen(!isOpen)}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-white">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <nav className={`fixed top-0 right-0 transform transition-transform duration-200 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'} w-64 h-full bg-gray-900 text-white p-8`}>
+        <button className="absolute top-4 right-4" onClick={() => setIsOpen(false)}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-white">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <ul className="space-y-4">
+          <li><NavLink to="/" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Home</NavLink></li>
+          <li><NavLink to="/signin" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Sign in</NavLink></li>
+          <li><NavLink to="/signup" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Sign up</NavLink></li>
+          <li><NavLink to="/news" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>What's new?</NavLink></li>
+          <li><NavLink to="/game" className="text-purple-500 hover:text-purple-400" onClick={() => setIsOpen(false)}>Game</NavLink></li>
+        </ul>
+      </nav>
+    </header>
+  );
 }
 
-export default Header
+export default Header;
