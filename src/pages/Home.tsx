@@ -1,8 +1,22 @@
 import { useState } from 'react'
 import backgroundImage from '../assets/hero-img.jpg'
+import RedirectButton from '../components/RedirectButton'
 
 const Home = () => {
-  const [openMenu, setOpenMenu] = useState(false);
+  const [openSessionBar, setOpenSessionBar] = useState(false)
+  const [sessionId, setSessionId] = useState<number>(1)
+
+  /***
+   * Function to get session id
+   **/
+  const getSessionId = () => {
+    setOpenSessionBar(true)
+
+    //get session id from lubo be...
+  }
+
+
+
 
   return (
     <section className="flex items-center justify-center h-screen text-white" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', fontFamily: 'Libre Baskerville, serif' }}>
@@ -11,9 +25,17 @@ const Home = () => {
         <button 
           className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-500 w-full"
           type="button"
-          onClick={() => setOpenMenu(!openMenu)}>Start game
-        </button>   
-        {openMenu && <p className="mt-4 text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl">What is "Lorem ipsum"?...</p>}
+          onClick={() => getSessionId()}>Start game
+        </button>
+        {openSessionBar &&
+          <div className="flex flex-col">
+            <h2 className=''>Share this link to your friend:</h2>
+            <a  className=''
+                href={`http://localhost:5173/game/${sessionId}`}>http://localhost:5173/game/{sessionId}
+            </a>
+            <RedirectButton sessionId={sessionId} labelButton="OK"/>
+          </div>
+        }
       </div>
     </section>
   )
