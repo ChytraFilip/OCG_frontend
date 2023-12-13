@@ -13,7 +13,7 @@ const RedirectButton: React.FC<RedirectButtonProps> = ({ sessionId, labelButton}
     }
   
     return (
-      <button onClick={handleButtonClick}>
+      <button className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-500 w-full" onClick={handleButtonClick}>
         {labelButton}
       </button>
     )
