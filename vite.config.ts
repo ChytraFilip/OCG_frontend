@@ -16,4 +16,5 @@ export default defineConfig({
     port: 5173,
   },
   plugins: [react()],
+  assetsInclude: ["**/*.glb"],
 });
