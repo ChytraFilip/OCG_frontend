@@ -1,8 +1,6 @@
-import { useEffect } from "react"
 import { useSessionContext } from '../components/sessionContext';
 import { type GameDto } from '../api/generated-sources/ocgClientFetch';
 import '../components/init'
-
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 

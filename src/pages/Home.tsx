@@ -2,21 +2,29 @@ import { useState } from 'react'
 import backgroundImage from '../assets/hero-img.jpg'
 import RedirectButton from '../components/RedirectButton'
 import { signUser, connect } from '../api/generated-sources/ocgClientFetch'
-import { useSessionContext } from '../components/sessionContext';
+import { useSessionContext } from '../components/sessionContext'
 
 const Home = () => {
   const [openSessionBar, setOpenSessionBar] = useState(false)
   const [openStartBar, setOpenStartBar] = useState(true)
   const [userName, setUserName] = useState('')
-  const { session, setSession } = useSessionContext();
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [isButtonDisabledClass, setIsButtonDisabledClass] = useState('bg-gray-300 text-white px-4 py-2 rounded w-full');
+  const { session, setSession } = useSessionContext()
+  const [isButtonDisabledClass, setIsButtonDisabledClass] = useState('bg-gray-300 text-white px-4 py-2 rounded w-full')
+  const [error, setError] = useState('')
 
   const getSessionId = () => {
-    signUser(userName)
+    return signUser(userName)
     .then((user) => connect(user?.id || 1))
-    .then((sessiondto) => setSession(sessiondto))
-    setOpenSessionBar(true)
+    .then((sessiondto) => {
+      setSession(sessiondto)
+      setOpenSessionBar(true)
+      return true
+    })
+    .catch(()=> {
+      setError('Use different name.')
+      setUserName('')
+      return false
+    }) 
   }
 
   return (
@@ -25,13 +33,13 @@ const Home = () => {
         <h1 className="text-4xl font-bold mb-4 text-center">Welcome to the new game</h1>
         {openStartBar && 
           <>
+          {error && <p>{error}</p>}
           <input 
             className='text-black bg-white'
             type="text" 
             placeholder='Enter your name.'
             onChange={(e)=> {
               if(e.target.value !== '') {
-                setIsButtonDisabled(false)
                 setIsButtonDisabledClass('bg-purple-800 text-white px-4 py-2 rounded w-full');
               }
               setUserName(e.target.value || '')
@@ -41,13 +49,17 @@ const Home = () => {
           <button 
             className={isButtonDisabledClass}
             type="button"
-            disabled={isButtonDisabled}
             onClick={() => {
-              if (!isButtonDisabled) {
-                getSessionId()
-                setOpenStartBar(false)
+              if (userName !== '') {
+                getSessionId().then((result) => {
+                  if (result) {
+                    setOpenStartBar(false);
+                  }
+                });
               }
-            }}>Start game
+            }}
+          >
+            Start game
           </button>
           </>
         }
