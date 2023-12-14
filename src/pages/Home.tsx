@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import backgroundImage from '../assets/hero-img.jpg'
 import RedirectButton from '../components/RedirectButton'
-import { SessionDto, signUser, connect } from '../api/generated-sources/ocgClientFetch'
+import { signUser, connect } from '../api/generated-sources/ocgClientFetch'
+import { useSessionContext } from '../components/sessionContext';
 
 const Home = () => {
   const [openSessionBar, setOpenSessionBar] = useState(false)
   const [openStartBar, setOpenStartBar] = useState(true)
   const [userName, setUserName] = useState('')
-  const [session, setSession] = useState<SessionDto>({})
+  const { session, setSession } = useSessionContext();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isButtonDisabledClass, setIsButtonDisabledClass] = useState('bg-gray-300 text-white px-4 py-2 rounded w-full');
 
   const getSessionId = () => {
-    console.log(userName)
     signUser(userName)
     .then((user) => connect(user?.id || 1))
     .then((sessiondto) => setSession(sessiondto))
@@ -55,9 +55,9 @@ const Home = () => {
           <div className="flex flex-col">
             <h2 className=''>Share this link to your friend:</h2>
             <a  className=''
-                href={`http://localhost:5173/game/${session.route}`}>http://localhost:5173/game/{session.route}
+                href={`http://localhost:5173/game/${session?.route}`}>http://localhost:5173/game/{session?.route}
             </a>
-            <RedirectButton sessionId={session.route || ''} labelButton="OK"/>
+            <RedirectButton sessionId={session?.route || ''} labelButton="OK"/>
           </div>
         }
       </div>

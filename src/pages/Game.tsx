@@ -1,70 +1,87 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { io } from 'socket.io-client';
+import { useSessionContext } from '../components/sessionContext';
+import { GameDto } from '../api/generated-sources/ocgClientFetch';
 
 const Game = () => {
-  const socket = io('/stomp-endpoint');
-  // const [socket, setSocket] = useState<Socket | null>(null);
-  const [showConnection, setShowConnection] = useState(false);
-  const [showConnectButton, setShowConnectButton] = useState(true);
-  const [showDisconnectButton, setDisconnectButton] = useState(false);
-  const [message, setMessage] = useState('');
+  const { session } = useSessionContext();
+  const socket = io(session?.socket || '');
+  
+  // const [showConnection, setShowConnection] = useState(false);
+  // const [showConnectButton, setShowConnectButton] = useState(true);
+  // const [showDisconnectButton, setDisconnectButton] = useState(false);
+  // const [message, setMessage] = useState('');
 
-  const setConnected = (connected: boolean) => {
-    if(connected) {
-      setShowConnection(true);
-      setShowConnectButton(false);
-    } else {
-      setDisconnectButton(true);
-    }
+  console.log(session)
+  console.log(session?.socket)
+  console.log(session?.subscribe)
+  console.log(socket?.send)
+
+  // const setConnected = (connected: boolean) => {
+  //   if(connected) {
+  //     setShowConnection(true);
+  //     // setShowConnectButton(false);
+  //   } else {
+  //     setDisconnectButton(true);
+  //   }
+  // };
+
+  // const connect = () => {
+  //   // Poslouchání události 'connect'
+  //   socket.on('connect', () => {
+  //     console.log('Connected to server');
+
+  //     // Odeslání zprávy na '/send'
+  //     socket.emit(session?.send || '', { message: 'Hello from client' });
+  //   });
+
+  //   // Poslouchání události 'message' na '/game-get/result'
+  //   socket.on(session?.subscribe || '', (data) => {
+  //     console.log('Received data from /game-get/result:', data);
+  //     // Zde můžete aktualizovat stav vaší React komponenty nebo vyvolat jinou akci
+  //   });
+  // };
+
+  // const disconnect = () => {
+  //   console.log("Odpojuji..disconnect()")
+  //   socket.disconnect();
+  // };
+
+  const sendMessage = () => {
+    console.log("test")
+    socket.emit(session?.send || '',  {state:"test"} as GameDto);
+    console.log("Zpráva odeslána.")
   };
 
-  const connect = () => {
-    socket.on('connect', () => {
-      setConnected(true);
-      console.log('Připojeno...');
-
-      // Odeslání subscribe zprávy na server
-      socket.emit('subscribe', '/topic/messages');
-
-      // Naslouchání na události 'messages' na kanálu '/topic/messages'
-      socket.on('messages', (receivedMessages) => {
-        setMessage(JSON.parse(receivedMessages));
-      });
-
+  useEffect(() => {
+    socket.on(session?.subscribe || "", (data) => {
+      console.log("Zpráva přijata.");
+      console.log(data);
+      alert(data.message);
     });
-  };
-
-  const disconnect = () => {
-    console.log("Odpojuji..")
-    socket.disconnect();
-  };
-
-  const sendTxt = () => {
-    console.log("Odesílám zprávu...")
-    socket.emit('send', '/app/hello', { txt: "Your message" });
-  };
-
-  useEffect( ()=> {
-    console.log("Zahajuji připojování...")
-    connect();
 
     return () => {
-      disconnect();
-      setConnected(false)
-      setShowConnection(false);
+      socket.off(session?.subscribe || "");
     };
+  }, [session?.subscribe, socket]);
 
-  }, [])
+  // useEffect( ()=> {
+  //   console.log("Zahajuji připojování... connect()")
+  //   // connect();
+
+  //   return () => {
+  //     // disconnect();
+  //     // setConnected(false)
+  //     // setShowConnection(false);
+  //   };
+
+  // }, [])
 
   return <>
      <div>
       <h1>Socket IO test via websocket</h1>
-      <p>State of conenection: {showConnection ? 'Connected' : 'Non connected'}</p>
-      {showConnectButton && <button onClick={()=>connect}>Connect</button>}
-      {showDisconnectButton && <button onClick={()=>disconnect}>Disconnect</button>}
-      <br />
-      {<p>{message}</p>}
-      <button onClick={sendTxt}>Send message</button>
+      <input type="text" placeholder="Enter you message.." />
+      <button type="button" onClick={()=>sendMessage()}>Send message</button>
     </div>
   </>
 }
